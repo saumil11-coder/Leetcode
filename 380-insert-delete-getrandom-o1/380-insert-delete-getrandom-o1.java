@@ -1,46 +1,38 @@
 class RandomizedSet {
-    List<Integer> ls;
-    
-HashMap<Integer ,Integer> hs;
-
+HashMap<Integer,Integer> hs;
+    List<Integer> list;
     public RandomizedSet() {
-    hs=new HashMap<>();
-    ls=new ArrayList<>();
-
-        
-        
-        
+        hs=new HashMap<>();
+        list=new ArrayList<>();
     }
     
     public boolean insert(int val) {
         if(hs.containsKey(val))
+            return false;
+        list.add(val);
+        hs.put(val,list.size()-1);
+        return true;
+    }
+    
+    public boolean remove(int val) {
+        if(hs.containsKey(val)==false)
         {
             return false;
         }
-        ls.add(val);
-        hs.put(val,ls.size()-1);
+        int idx=hs.get(val);
+        Collections.swap(list,idx,list.size()-1);
+        int swappedWith=list.get(idx);
+        hs.put(swappedWith,idx);
+        list.remove(list.size()-1);
+        hs.remove(val);
         return true;
         
     }
     
-    public boolean remove(int val) {
-       if(!hs.containsKey(val)) {
-            return false;
-        }else {
-            int key = hs.get(val);
-            int lastElement = ls.get(ls.size() - 1);
-            hs.put(lastElement, key);
-            ls.set(key, lastElement);
-            hs.remove(val);
-            ls.remove(ls.size() - 1);
-            return true;
-        }
-    }
-    
-    
     public int getRandom() {
-          Random random = new Random();
-        return ls.get( random.nextInt(ls.size()) );
+        Random random=new Random();
+        int n=random.nextInt(list.size());
+        return list.get(n);
         
     }
 }
