@@ -14,20 +14,39 @@
  * }
  */
 class Solution {
-    private void dfs(TreeNode node,List<Integer>postOrder)
-    {
-        if(node==null)
-        {
-            return;
-        }
-        dfs(node.left,postOrder);
-        dfs(node.right,postOrder);
-        postOrder.add(node.val);
-    }
-    public List<Integer> postorderTraversal(TreeNode root) {
-        List<Integer> postOrder=new ArrayList<>();
-        dfs(root,postOrder);
-        return postOrder;
+  public List<Integer> postorderTraversal(TreeNode root) {
+Stack<TreeNode> st=new Stack<>();
+List<Integer> bigList=new ArrayList<>();
+if(root==null)
+{
+return bigList;
+}
+TreeNode current=root;
+while(current!=null || !st.isEmpty())
+{if(current!=null){
+st.push(current);
+current=current.left;
+}
+else{
+TreeNode temp= st.peek().right;
+if(temp==null){
+temp=st.pop();
+bigList.add(temp.val);
+while(!st.isEmpty()&& temp==st.peek().right)
+{
+temp=st.pop();
+bigList.add(temp.val);
+}
+}
+else{
+current=temp;
+}
+}
+}
+return bigList;
+
+
         
-    }
+}
+
 }
