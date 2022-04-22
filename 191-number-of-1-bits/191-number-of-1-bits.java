@@ -1,7 +1,13 @@
 public class Solution {
     // you need to treat n as an unsigned value
     public int hammingWeight(int n) {
-        return Integer.bitCount(n);
+        int counter=0;
+        while(n!=0)
+        {
+            n&=(n-1);
+            ++counter;
+        }
+        return counter;
         
     }
 }
