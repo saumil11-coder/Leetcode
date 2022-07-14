@@ -27,7 +27,21 @@ class Solution
 {
     int thirdLargest(int a[], int n)
     {
-	    Arrays.sort(a);
-	    return a[n-3];
+	    PriorityQueue<Integer> pq=new PriorityQueue<>();
+	    for(int i=0;i<n;i++)
+	    {
+	        if(i<3)
+	        {
+	            pq.add(a[i]);
+	        }
+	        else{
+	            if(a[i]>pq.peek())
+	            {
+	                pq.remove();
+	                pq.add(a[i]);
+	            }
+	        }
+	    }
+	    return pq.peek();
     }
 }
