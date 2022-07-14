@@ -36,19 +36,23 @@ public class Main {
 
 class Solution {
     int count(int[] arr, int n, int x) {
-        int ans=0;
-        Map<Integer,Integer> mp=new HashMap<>();
+        int start=0; int end=-1;
         for(int i=0;i<n;i++)
         {
-            mp.put(arr[i],mp.getOrDefault(arr[i],0)+1);
-        }
-        for(Map.Entry<Integer,Integer>entry:mp.entrySet())
-        {
-            if(entry.getKey()==x)
+            if(arr[i]==x)
             {
-                ans=entry.getValue();
+                start=i;
+                break;
             }
         }
-        return ans;
+        for(int i=arr.length-1;i>=0;i--)
+        {
+            if(arr[i]==x)
+            {
+                end=i;
+                break;
+            }
+        }
+        return end-start+1;
     }
 }
