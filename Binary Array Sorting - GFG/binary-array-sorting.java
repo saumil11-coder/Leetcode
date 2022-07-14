@@ -56,13 +56,23 @@ class Solution
     //Function to sort the binary array.
     static void binSort(int A[], int N)
     {
-        // add your code here
-        
-        
-        /**************
-        * No need to print the array
-        * ************/
-        Arrays.sort(A);
+        int count0=0;
+        int count1=0;
+        for(int i=0;i<N;i++)
+        {
+            if(A[i]==0)
+            count0++;
+            if(A[i]==1)
+            count1++;
+        }
+        for(int i=0;i<count0;i++)
+        {
+            A[i]=0;
+        }
+        for(int i=count0;i<N;i++)
+        {
+            A[i]=1;
+        }
     }
 }
 
