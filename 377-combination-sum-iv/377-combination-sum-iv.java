@@ -1,8 +1,8 @@
 class Solution {
-    public int help(List<Integer> l,int target,int[] dp){
+    public int help(List<Integer> l,int target,int dp[]){
        if(target==0) return 1;
         if(target<0) return 0;
-        if(dp[target]!=-1) return dp[target];
+    if(dp[target]!=-1)return dp[target];
         int count =0;
         for(int i=0;i<l.size();i++){
            count+=help(l,target-l.get(i),dp);
