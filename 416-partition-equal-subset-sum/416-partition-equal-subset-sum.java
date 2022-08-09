@@ -1,41 +1,37 @@
 class Solution {
-    public boolean canPartition(int[] nums) {
-        int n= nums.length;
-        int sum=0;
-        for(int i=0;i<nums.length;i++){
-            sum=sum+nums[i];
+    public boolean helper(int idx,int target,int arr[],int dp[][])
+    {
+        if(target==0)return true;
+        if(idx==0)return arr[0]==target;
+  
+    if(dp[idx][target]!=-1)
+        return dp[idx][target]==0?false:true;
+        boolean nottake=helper(idx-1,target,arr,dp);
+        boolean take=false;
+        if(arr[idx]<=target)
+        {
+            take=helper(idx-1,target-arr[idx],arr,dp);
             
         }
-        if(sum%2 != 0)return false;
-        
-        return isSubarray(n, nums, sum/2);
-            
+        dp[idx][target]=nottake||take?1:0;
+        return take||nottake;
         
     }
-    
-    public boolean isSubarray(int n, int[] nums, int sum){
-        boolean arr[][]= new boolean [n+1][sum+1];
-        
-        for(int i=0;i<n+1;i++){
-            for(int j=0;j<sum+1;j++){
-                if(i==0){
-                    arr[i][j]=false;
-                }
-                if(j==0){
-                    arr[i][j]=true;
-                }
-            } 
+    public boolean canPartition(int[] nums) {
+        int totSUM=0;
+        int n=nums.length;
+        for(int i=0;i<nums.length;i++)
+        {
+            totSUM+=nums[i];
+        }
+        if(totSUM%2==1)return false;
+        else{
+            int k=totSUM/2;
+            int dp[][]=new int[n][k+1];
+            for(int row[]:dp)
+                Arrays.fill(row,-1);
+            return helper(n-1,k,nums,dp);
         }
         
-        for(int i=1;i<n+1;i++){
-            for(int j=1;j<sum+1;j++){
-                if(nums[i-1]<=j){
-                    arr[i][j]= arr[i-1][j-nums[i-1]]  || arr[i-1][j] ;
-                }else{
-                    arr[i][j]=arr[i-1][j];
-                }
-            }
-        }
-            return arr[n-1][sum];
     }
 }
