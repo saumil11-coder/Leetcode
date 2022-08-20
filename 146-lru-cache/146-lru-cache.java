@@ -1,24 +1,26 @@
 class LRUCache {
     Node head=new Node(0,0);
     Node tail=new Node(0,0);
-    Map<Integer,Node> mp=new HashMap<>();
-    int _capacity=0;
+    Map<Integer,Node> mp =new  HashMap<>();
+    int _capacity ;
+
     public LRUCache(int capacity) {
         _capacity=capacity;
         head.next=tail;
         tail.prev=head;
-        
     }
     
     public int get(int key) {
-        if(mp.containsKey(key))
-        {
-            Node node=mp.get(key);
-            remove(node);
-            insert(node);
-            return node.value;
-        }
+    if(mp.containsKey(key))
+    {
+        Node node=mp.get(key);
+        remove(node);
+        insert(node);
+        return node.value;
+        
+    }
         else return -1;
+        
     }
     
     public void put(int key, int value) {
@@ -26,23 +28,21 @@ class LRUCache {
         {
             remove(mp.get(key));
         }
-        if(mp.size()==_capacity)
+        if(_capacity==mp.size())
         {
             remove(tail.prev);
         }
         insert(new Node(key,value));
+            
         
     }
     private void insert(Node node)
-    
     {
-        
         mp.put(node.key,node);
-        Node headNext=head.next;
+        node.next=head.next;
+        node.next.prev=node;
         head.next=node;
         node.prev=head;
-        headNext.prev=node;
-        node.next=headNext;
     }
     private void remove(Node node)
     {
@@ -50,9 +50,10 @@ class LRUCache {
         node.prev.next=node.next;
         node.next.prev=node.prev;
     }
+    
     class Node{
-        Node prev,next;
-        int key,value;
+        Node prev ,next;
+        int key , value;
         Node(int _key,int _value)
         {
             key=_key;
