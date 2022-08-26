@@ -1,25 +1,32 @@
 class Solution {
     public boolean reorderedPowerOf2(int n) {
-        int ans[]= buildFreqCount(n);
-        int x=1;
-        for(int i=0;i<31;i++)
-        {
-            if(Arrays.equals(ans,buildFreqCount(x)))
+        int Count[] = Count(n);
+        int power = 1;
+        for (int i = 0; i < 31; i++) {
+            int[] PowerCount = Count(power);
+            if (Equal(Count, PowerCount)) {
                 return true;
-            x<<=1;
+            }
+            power *= 2;
         }
         return false;
-        
-        
     }
-    public int[] buildFreqCount(int n)
-    {
-        int []freq=new int[10];
-        while(n!=0)
-        {
-            freq[n%10]++;
-            n/=10;
+
+    private int[] Count(int n) { // Counting Occurence of each digit
+        int Count[] = new int[10];
+        while (n != 0) {
+            Count[n % 10]++;
+            n /= 10;
         }
-        return freq;
+        return Count;
+    }
+
+    private boolean Equal(int ar1[], int ar2[]) {
+        for (int i = 0; i < ar2.length; i++) {
+            if (ar1[i] != ar2[i]) {
+                return false;
+            }
+        }
+        return true;
     }
 }
