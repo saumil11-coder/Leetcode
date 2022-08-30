@@ -1,20 +1,27 @@
-public class Solution {
-    Map<Integer, Integer> amountDict = new HashMap<Integer, Integer>();
-
+class Solution {
     public int coinChange(int[] coins, int amount) {
-        if (amount == 0) return 0;
-        if (amountDict.containsKey(amount)) return amountDict.get(amount);
-        int n = amount + 1;
-        for (int coin : coins) {
-            int curr = 0;
-            if (amount >= coin) {
-                int next = coinChange(coins, amount - coin);
-                if (next >= 0) curr = 1 + next;
-            }
-            if (curr > 0) n = Math.min(n, curr);
+        int n=coins.length;
+        
+        int dp[][]=new int[n][amount+1];
+        for(int row[]:dp)
+            Arrays.fill(row,-1);
+        int ans= helper(coins.length-1,coins,amount,dp);
+        if(ans>=(int)Math.pow(10,9)) return -1;
+        return ans;
+        
+    }
+    public int helper(int idx,int coins[],int target,int dp[][])
+    {
+        if(idx==0)
+        {
+            if(target%coins[0]==0) return (target/coins[0]);
+            return (int)Math.pow(10,9);
         }
-        int finalCount = (n == amount + 1) ? -1 : n;
-        amountDict.put(amount, finalCount);
-        return finalCount;
+        if(dp[idx][target]!=-1) return dp[idx][target];
+        int nottake=0+helper(idx-1,coins,target,dp);
+        int take=(int)Math.pow(10,9);
+        if(coins[idx]<=target) take=1+helper(idx,coins,target-coins[idx],dp);
+        return  dp[idx][target]=Math.min(nottake,take);
+        
     }
 }
