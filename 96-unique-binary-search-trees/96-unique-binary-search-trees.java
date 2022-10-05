@@ -1,25 +1,19 @@
 class Solution {
-    public int helper(int idx,int dp[])
-    {
-        if(idx==0||idx==1) return 1;
-        if(dp[idx]!=-1) return dp[idx];
-        int total=0;
-        for(int i=1;i<=idx;i++)
-        {
-            int left=helper(i-1,dp);
-            int right=helper(idx-i,dp);
-             total+=left*right;
-        }
-        return dp[idx]=total;
-        
-    }
-    
-    
-    public int numTrees(int n) { 
+    public int numTrees(int n) {
         int dp[]=new int[n+1];
-        Arrays.fill(dp,-1);
-        return helper(n,dp);
-        
+         dp[0]=1;
+         dp[1]=1;
+    for(int i=2;i<dp.length;i++)
+    {
+        int l=0; int r=i-1;
+        while(l<=(i-1))
+        {
+            dp[i]+=dp[l]*dp[r];
+            l++;
+            r--;
+        }
+    }
+        return dp[n];
         
     }
 }
