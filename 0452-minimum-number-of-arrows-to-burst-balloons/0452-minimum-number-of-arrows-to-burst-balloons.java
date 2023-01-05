@@ -5,13 +5,7 @@ class Solution {
         
 Arrays.sort(points, (a, b) -> Long.compare(a[1], b[1]));
 
-        for(int i=0;i<points.length;i++)
-      {
-          for(int j=0;j<points[0].length;j++)
-          {
-              System.out.println(points[i][j]);
-          }
-      }
+      
         int i = 0;
         int j = 0;
         int count = 0;
